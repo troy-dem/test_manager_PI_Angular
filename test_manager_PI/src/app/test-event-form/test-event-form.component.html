@@ -1,0 +1,19 @@
+<h1>Encodage d'un test</h1>
+
+<input type = "text" name = "criterion" placeholder = "Date du test" ngModel #criterion="ngModel">
+<button type= "button" (click)="onClickSearch(criterion.value)" >Chercher</button>
+<br/>
+
+<form [formGroup]="testForm" (ngSubmit)="onSubmit(testForm.value)">
+    <input type = "text" name = "Date" placeholder = "Date" formControlName="date">
+    <br/>
+    <input type = "text" name = "Hour" placeholder = "Heure" formControlName="time">
+    <br/>
+    <input type = "text" name = "completionTime" placeholder = "Temps pour finir" formControlName="completionTime">
+    <br/>
+    <input type = "text" name = "successRate" placeholder = "% de réussite" formControlName="successRate">
+    <br/>
+    <button type = "submit" (click)="onClickSave(testForm.value)">Enregistrer</button>
+    <button type = "submit" (click)="onClickModdify(testForm.value)" >Modifier</button>
+    <Button type = "submit" (click)="onClickDelete(testForm.value)" >Supprimer</Button>
+</form>
