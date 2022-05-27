@@ -1,0 +1,37 @@
+<h1>Gestion des Joueurs</h1>
+
+<label for="criterionType">Critère de recherche:</label>
+<select name="criterionType" ngModel #criterionType="ngModel">
+    <option value="firstname">Prénom</option>
+    <option value="surname">Nom</option>
+    <option value="age">Age</option>
+    <option value="education">Formation</option>
+</select>
+<input type = "text" name = "criterion" placeholder = "valeur du critère" ngModel #criterion="ngModel">
+<button type= "button" (click)="onClickSearch(criterionType.value,criterion.value)" >Chercher</button>
+<br/>
+
+<table>
+    <tr><th>Prénom</th><th>Nom</th><th>Age</th><th>Formation</th></tr>
+        <tr *ngFor="let player of players">
+            <td>{{player.firstname}}</td>
+            <td>{{player.surname}}</td>
+            <td>{{player.age}}</td>
+            <td>{{player.education}}</td>
+            <button type= "button" (click)="onClickSelect(player)">Select</button>
+        </tr>
+</table>
+
+<form [formGroup]="playerForm">
+    <input type = "text" name = "firstname" placeholder = "Prénom" formControlName="firstname">
+    <br/>
+    <input type = "text" name = "surname" placeholder = "Nom" formControlName="surname">
+    <br/>
+    <input type = "text" name = "age" placeholder = "Age" formControlName="age">
+    <br/>
+    <input type = "text" name = "education" placeholder = "Formation" formControlName="education">
+    <br/>
+    <button type = "submit" (click)="onClickSave(playerForm.value)">Enregistrer</button>
+    <button type = "submit" (click)="onClickModdify(playerForm.value)" >Modifier</button>
+    <Button type = "submit" (click)="onClickDelete(playerForm.value)" >Supprimer</Button>
+</form>

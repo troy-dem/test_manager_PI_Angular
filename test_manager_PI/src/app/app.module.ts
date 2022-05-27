@@ -8,13 +8,17 @@ import { AppRoutingModule } from './app-routing.module';
 import { RouteTesterComponent } from './route-tester/route-tester.component';
 import { HttpClientModule } from '@angular/common/http';
 import { TestEventListComponent } from './test-event-list/test-event-list.component';
+import { PlayerListComponent } from './player-list/player-list.component';
+import { PlayerFormComponent } from './player-form/player-form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TestEventFormComponent,
     RouteTesterComponent,
-    TestEventListComponent
+    TestEventListComponent,
+    PlayerListComponent,
+    PlayerFormComponent
   ],
   imports: [
     BrowserModule,
