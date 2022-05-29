@@ -1,26 +1,8 @@
 <h1>Encodage d'un test</h1>
 
-<label for="criterionType">Critère de recherche:</label>
-<select name="criterionType" ngModel #criterionType="ngModel">
-    <option value="dateTime">Date</option>
-    <option value="completionTime">Temps pour finir</option>
-    <option value="successRate">Taux de réussite</option>
-</select>
-<input type = "text" name = "criterion" placeholder = "valeur du critère" ngModel #criterion="ngModel">
-<button type= "button" (click)="onClickSearch(criterionType.value,criterion.value)" >Chercher</button>
-<br/>
+<app-test-event-list (emit_test)="chooseTest($event)"></app-test-event-list>
 
-<table>
-    <tr><th>Date et heure</th><th>Temps pour finir (min)</th><th>Taux de réussite</th></tr>
-        <tr *ngFor="let test of tests">
-            <td>{{test.dateTime.split("T")[0].split("-").reverse().join("/")}} {{test.dateTime.split("T")[1].split(".")[0].split(":").slice(0,2).join(":")}}</td>
-            <td>{{test.completionTime.split(":")[1]}}</td>
-            <td>{{test.successRate}}%</td>
-            <button type= "button" (click)="onClickSelect(test)">Select</button>
-        </tr>
-</table>
-
-<form [formGroup]="testForm" (ngSubmit)="onSubmit(testForm.value)">
+<form [formGroup]="testForm">
     <input type = "text" name = "Date" placeholder = "Date" formControlName="date">
     <br/>
     <input type = "text" name = "Time" placeholder = "Heure" formControlName="time">

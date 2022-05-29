@@ -23,13 +23,9 @@ export class PlayerFormComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onClickSelect(player: Player){
-    console.log(player)
-    this.player.player_id = player.player_id
-    console.log("this test id: "+this.player.player_id)
-     if (player !=null){
-       this.playerForm.patchValue(player);
-     }
+  choosePlayer($event: Player) {
+    this.player.player_id = $event.player_id
+    this.playerForm.patchValue($event);
   }
 
   onClickSave(data: Player){
@@ -53,14 +49,6 @@ export class PlayerFormComponent implements OnInit {
     this.ProcessFormData(data)
     this.api.deletePlayer(this.player).subscribe(data => {
         console.log("delete return : "+data)  
-    })
-   }
-
-   onClickSearch(criterionType:string, criterion: string){
-    const criteria: {[index: string]:any} = {}
-    criteria[criterionType] = criterion
-    this.api.searchPlayer(criteria).subscribe(data => {
-      this.players = data;
     })
    }
 

@@ -1,0 +1,14 @@
+<app-test-event-list (emit_test)="chooseTest($event)"></app-test-event-list>
+<button type= "button" (click)="onClickViewTeam()" >Affficher l'équipe</button>
+<table>
+    <tr><th>Prénom</th><th>Nom</th><th>Age</th><th>Formation</th></tr>
+        <tr *ngFor="let member of teamMembers">
+            <td>{{member.firstname}}</td>
+            <td>{{member.surname}}</td>
+            <td>{{member.age}}</td>
+            <td>{{member.education}}</td>
+        </tr>
+</table>
+<app-player-list (emit_player)="choosePlayer($event)"></app-player-list>
+<button type= "button" (click)="onClickSetTeam()" >Ajouter à l'équipe</button>
+<button type= "button" (click)="onClickRemoveTeam()" >Supprimer de l'équipe</button>

@@ -24,14 +24,23 @@ export interface TestFormData{
   successRate: number
 }
 
+export interface Team{
+  players: Player[]
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class RestService {
 
   constructor(private http: HttpClient) { }
+
+  getLevel() : Observable<number>{
+    return this.http.get<number>("http://localhost:3000/level")
+  }
+
   getTestEvents() : Observable<TestEvent[]>{
-    return this.http.post<TestEvent[]>("http://localhost:3000/tests",{})
+    return this.http.post<TestEvent[]>("http://localhost:3000/test/list",{})
   }
 
   createTest(test: TestEvent): Observable<TestEvent>{
@@ -44,7 +53,7 @@ export class RestService {
   }
 
   searchTest(criterias: Object) : Observable<TestEvent[]>{
-    return this.http.post<TestEvent[]>("http://localhost:3000/tests",criterias)
+    return this.http.post<TestEvent[]>("http://localhost:3000/test/list",criterias)
   }
 
   deleteTest(test: TestEvent): Observable<TestEvent>{
@@ -70,7 +79,20 @@ export class RestService {
   }
 
   deletePlayer(player: Player): Observable<Player>{
-    return this.http.delete<Player>("http://localhost:3000/player",{body:player})
+    return this.http.delete<Player>("http://localhost:3000/player",{body: player})
+  }
+
+  viewTeam(test_id: number){
+    console.log("view team: "+test_id)
+    return this.http.post<Team[]>("http://localhost:3000/test/team",{test_id: test_id})
+  }
+
+  setTeam(team: Object){
+    return this.http.post<Player[]>("http://localhost:3000/player/team",team)
+  }
+
+  removeTeam(team: Object){
+    return this.http.delete<Player[]>("http://localhost:3000/player/team",{body: team})
   }
   
 }

@@ -9,7 +9,7 @@ import { RestService, TestEvent, TestFormData } from '../rest.service';
 })
 export class TestEventFormComponent implements OnInit {
   
-  tests: TestEvent[] = [];
+  tests: TestEvent[] = []
   constructor(private api: RestService) { }
   testForm = new FormGroup({
     date: new FormControl(''),
@@ -23,8 +23,15 @@ export class TestEventFormComponent implements OnInit {
     
   }
 
-  onSubmit(data: TestEvent) {
-    console.log("submit successful")
+  chooseTest($event: TestEvent) {
+    this.test.test_id = $event.test_id
+    var dateparts = $event.dateTime.split("T")[0].split("-").reverse()
+     var year = dateparts[2].slice(2,4)
+     var testdate =  dateparts.slice(0,2).join("/")+"/"+year
+     var testtime = $event.dateTime.split("T")[1].split(".")[0].slice(0,5)
+     const formData: TestFormData = {date: testdate, time:testtime, completionTime: $event.completionTime.slice(3,5), successRate: $event.successRate}
+      this.testForm.patchValue(formData);
+      console.log(this.test)
   }
 
  onClickSave(data: TestFormData) {
@@ -49,42 +56,6 @@ export class TestEventFormComponent implements OnInit {
   this.api.deleteTest(this.test).subscribe(data => {
       console.log("delete return : "+data)  
   })
- }
- onClickSearch(criterionType:string, criterion: string){
-  switch (criterionType) {
-    case "dateTime":
-      if (criterion){
-        var dateparts = criterion.split("/")
-        criterion = new Date(2000+(+dateparts[2]),+dateparts[1]-1,+dateparts[0]).toUTCString()
-        console.log("criterion val: "+criterion)
-      }
-      break;
-    case "completionTime":
-      if (criterion){
-        criterion = "00:"+criterion+":00"
-      }
-      break;
-    default:
-      console.log(criterionType)
-  }
-  const criteria: {[index: string]:any} = {}
-  criteria[criterionType] = criterion
-  this.api.searchTest(criteria).subscribe(data => {
-    this.tests = data;
-  })
- }
- onClickSelect(test: TestEvent){
-   console.log(test)
-   this.test.test_id = test.test_id
-   console.log("this test id: "+this.test.test_id)
-   var dateparts = test.dateTime.split("T")[0].split("-").reverse()
-   var year = dateparts[2].slice(2,4)
-   var testdate =  dateparts.slice(0,2).join("/")+"/"+year
-   var testtime = test.dateTime.split("T")[1].split(".")[0].slice(0,5)
-   const formData: TestFormData = {date: testdate, time:testtime, completionTime: test.completionTime.slice(3,5), successRate: test.successRate}
-    if (test !=null){
-      this.testForm.patchValue(formData);
-    }
  }
 
 ConvertFormData(data: TestFormData){
