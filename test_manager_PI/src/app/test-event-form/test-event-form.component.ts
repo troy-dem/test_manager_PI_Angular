@@ -59,9 +59,16 @@ export class TestEventFormComponent implements OnInit {
  }
 
 ConvertFormData(data: TestFormData){
-  var dateparts = data.date.split("/")
-  var timeparts = data.time.split(":")
-  this.test.dateTime = new Date(2000+(+dateparts[2]),+dateparts[1]-1,+dateparts[0],+timeparts[0],+timeparts[1]).toUTCString()
+  if (!data.date){
+    this.test.dateTime = new Date(Date.now()).toUTCString()
+    console.log("in fact invalid date")
+  }
+  else{
+    var dateparts = data.date.split("/")
+    var timeparts = data.time.split(":")
+    this.test.dateTime = new Date(2000+(+dateparts[2]),+dateparts[1]-1,+dateparts[0],+timeparts[0],+timeparts[1]).toUTCString()
+  }
+  
   this.test.completionTime = "00:"+data.completionTime+":00"
   this.test.successRate = data.successRate
   console.log(this.test)
